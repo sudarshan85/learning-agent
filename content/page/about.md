@@ -1,7 +1,7 @@
 ---
 title: "About"
 date: 2018-06-19T15:45:20-04:00
-draft: true
+draft: false 
 ---
 I am Sudarshan, PhD candidate at [University of Tennessee](https://utk.edu/) (UTK) in the [Electrical Engineering & Computer Science](https://www.eecs.utk.edu/) (EECS) department. My interests are in deep learning, natural language processing, and healthcare AI. I am part of [Oak Ridge National Laboratory](https://www.ornl.gov/) (ORNL) where I work on the Open Source Lab project.
 
