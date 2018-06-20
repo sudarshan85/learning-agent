@@ -1,7 +1,7 @@
 baseurl = "https://sudarshan85.github.io"
 DefaultContentLanguage = "en"
 #DefaultContentLanguage = "ja"
-title = "Learning Agent's Journal"
+title = "A Learning Agent's Journal"
 theme = "beautiful"
 metaDataFormat = "yaml"
 pygmentsStyle = "trac"
