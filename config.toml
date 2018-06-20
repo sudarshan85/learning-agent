@@ -1,45 +1,43 @@
 baseurl = "https://sudarshan85.github.io"
 DefaultContentLanguage = "en"
-#DefaultContentLanguage = "ja"
-title = "Beautiful Hugo"
+title = "Learning Agent's Journal"
 theme = "beautiful"
 metaDataFormat = "yaml"
 pygmentsStyle = "trac"
 pygmentsUseClasses = true
 pygmentsCodeFences = true
 pygmentsCodefencesGuessSyntax = true
+disqusShortname = "iamshaun"
+#DefaultContentLanguage = "ja"
 #pygmentsUseClassic = true
 #pygmentOptions = "linenos=inline"
-disqusShortname = "iamshaun"
 #googleAnalytics = "XXX"
 
 [Params]
-#  homeTitle = "Beautiful Hugo Theme" # Set a different text for the header on the home page
+  #homeTitle = "Beautiful Hugo Theme" # Set a different text for the header on the home page
   #subtitle = "Build a beautiful and simple website in minutes"
-  homeTitle = "Learning Agent's Journal" # Set a different text for the header on the home page
-  subtitle = "Documentation for my knowledge"
-#  logo = "img/avatar-icon.png"
-#  favicon = "img/favicon.ico"
+  #logo = "img/avatar-icon.png"
+  #favicon = "img/favicon.ico"
+  #rss = true
   dateFormat = "January 2, 2006"
   commit = false
-  rss = true
   comments = true
   readingTime = true
   useHLJS = true
   socialShare = false 
 #  gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
 
-#[[Params.bigimg]]
-#  src = "img/triangle.jpg"
-#  desc = "Triangle"
-#[[Params.bigimg]]
-#  src = "img/sphere.jpg"
-#  desc = "Sphere"
-#  # position: see values of CSS background-position.
-#  position = "center top"
-#[[Params.bigimg]]
-#  src = "img/hexagon.jpg"
-#  desc = "Hexagon"
+[[Params.bigimg]]
+  src = "img/triangle.jpg"
+  desc = "Triangle"
+[[Params.bigimg]]
+  src = "img/sphere.jpg"
+  desc = "Sphere"
+  # position: see values of CSS background-position.
+  position = "center top"
+[[Params.bigimg]]
+  src = "img/hexagon.jpg"
+  desc = "Hexagon"
 
 [Author]
   name = "Sudarshan Srinivasan"
