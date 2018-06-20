@@ -10,12 +10,14 @@ pygmentsCodeFences = true
 pygmentsCodefencesGuessSyntax = true
 #pygmentsUseClassic = true
 #pygmentOptions = "linenos=inline"
-#disqusShortname = "XXX"
+disqusShortname = "iamshaun"
 #googleAnalytics = "XXX"
 
 [Params]
 #  homeTitle = "Beautiful Hugo Theme" # Set a different text for the header on the home page
-  subtitle = "Build a beautiful and simple website in minutes"
+  #subtitle = "Build a beautiful and simple website in minutes"
+  homeTitle = "Learning Agent's Journal" # Set a different text for the header on the home page
+  subtitle = "Documentation for my knowledge"
 #  logo = "img/avatar-icon.png"
 #  favicon = "img/favicon.ico"
   dateFormat = "January 2, 2006"
