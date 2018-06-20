@@ -1,5 +1,6 @@
-baseurl = "https://sudarshan85.github.io"
+baseurl = "https://username.github.io"
 DefaultContentLanguage = "en"
+#DefaultContentLanguage = "ja"
 title = "Learning Agent's Journal"
 theme = "beautiful"
 metaDataFormat = "yaml"
@@ -7,37 +8,37 @@ pygmentsStyle = "trac"
 pygmentsUseClasses = true
 pygmentsCodeFences = true
 pygmentsCodefencesGuessSyntax = true
-disqusShortname = "iamshaun"
-#DefaultContentLanguage = "ja"
+#disqusShortname = "iamshaun"
 #pygmentsUseClassic = true
 #pygmentOptions = "linenos=inline"
 #googleAnalytics = "XXX"
 
 [Params]
-  #homeTitle = "Beautiful Hugo Theme" # Set a different text for the header on the home page
+#  homeTitle = "Beautiful Hugo Theme" # Set a different text for the header on the home page
   #subtitle = "Build a beautiful and simple website in minutes"
   #logo = "img/avatar-icon.png"
   #favicon = "img/favicon.ico"
-  #rss = true
+  homeTitle = "Welcome to my Blog" # Set a different text for the header on the home page
   dateFormat = "January 2, 2006"
   commit = false
+  rss = true
   comments = true
   readingTime = true
   useHLJS = true
-  socialShare = false 
+  #socialShare = true
 #  gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
 
-[[Params.bigimg]]
-  src = "img/triangle.jpg"
-  desc = "Triangle"
-[[Params.bigimg]]
-  src = "img/sphere.jpg"
-  desc = "Sphere"
-  # position: see values of CSS background-position.
-  position = "center top"
-[[Params.bigimg]]
-  src = "img/hexagon.jpg"
-  desc = "Hexagon"
+#[[Params.bigimg]]
+#  src = "img/triangle.jpg"
+#  desc = "Triangle"
+#[[Params.bigimg]]
+#  src = "img/sphere.jpg"
+#  desc = "Sphere"
+#  # position: see values of CSS background-position.
+#  position = "center top"
+#[[Params.bigimg]]
+#  src = "img/hexagon.jpg"
+#  desc = "Hexagon"
 
 [Author]
   name = "Sudarshan Srinivasan"
@@ -74,11 +75,6 @@ disqusShortname = "iamshaun"
     url = "page/about/"
     weight = 3
 
-[[menu.main]]
-    name = "Tags"
-    url = "tags"
-    weight = 3
-
 #[[menu.main]]
     #identifier = "samples"
     #name = "Samples"
@@ -101,3 +97,8 @@ disqusShortname = "iamshaun"
     #name = "Code Sample"
     #url = "post/2016-03-08-code-sample"
     #weight = 3
+
+[[menu.main]]
+    name = "Tags"
+    url = "tags"
+    weight = 3
