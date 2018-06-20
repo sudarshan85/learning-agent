@@ -66,11 +66,6 @@ disqusShortname = "iamshaun"
   #stackoverflow = "users/XXXXXXX/username"
 
 [[menu.main]]
-    name = "Blog"
-    url = ""
-    weight = 1
-
-[[menu.main]]
     name = "About"
     url = "page/about/"
     weight = 3
@@ -79,6 +74,11 @@ disqusShortname = "iamshaun"
     name = "Tags"
     url = "tags"
     weight = 3
+
+#[[menu.main]]
+    #name = "Blog"
+    #url = ""
+    #weight = 1
 
 #[[menu.main]]
     #identifier = "samples"
