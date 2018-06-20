@@ -8,7 +8,7 @@ pygmentsStyle = "trac"
 pygmentsUseClasses = true
 pygmentsCodeFences = true
 pygmentsCodefencesGuessSyntax = true
-#disqusShortname = "iamshaun"
+disqusShortname = "iamshaun"
 #pygmentsUseClassic = true
 #pygmentOptions = "linenos=inline"
 #googleAnalytics = "XXX"

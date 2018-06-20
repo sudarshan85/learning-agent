@@ -1,7 +1,7 @@
 ---
 title: "Check Your Error Function"
 date: 2018-06-20T14:28:42-04:00
-draft: true
+draft: false
 tags: [machine learning, tip]
 ---
 
