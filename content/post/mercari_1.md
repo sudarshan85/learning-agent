@@ -43,9 +43,9 @@ The data consists of 3 tab seperated files:
 
 |     Filename    | Size (MB) | No of Records |
 |:---------------:|:---------:|:-------------:|
-|   `train.tsv`   |    323    |    1482535    |
-|    `test.tsv`   |    148    |     693359    |
-| `test_stg2.tsv` |    737    |    3460725    |
+|   `train.tsv`   |    323    |    1,482,535    |
+|    `test.tsv`   |    148    |     693,359    |
+| `test_stg2.tsv` |    737    |    3,460,725    |
 Note that since, I'm not really competing in the competition, I don't the data in the test sets except for their `item_descrption` for building the language model.
 
 There are 8 columns in the `train.tsv`:
@@ -55,8 +55,8 @@ There are 8 columns in the `train.tsv`:
 |      `train_id`     |  Continuous |     N/A     |    0    |
 |        `name`       |     Text    |     N/A     |    0    |
 | `item_condition_id` | Categorical |      5      |    0    |
-|   `category_name`   | Categorical |     1287    |   6327  |
-|     `brand_name`    | Categorical |     4809    |  632682 |
+|   `category_name`   | Categorical |     1,287    |   6,327  |
+|     `brand_name`    | Categorical |     4,809    |  6,32682 |
 |       `price`       |  Continuous |     N/A     |    0    |
 |      `shipping`     |    Binary   |      2      |    0    |
 |  `item_description` |     Text    |     N/A     |    4    |
@@ -77,7 +77,7 @@ I created 4 datasets from my data for each of the various types of modeling.
 3. Structured Data: I include `['train_id', 'item_condition_id', 'category_name', 'brand_name', 'price', 'shipping', 'main_cat', 'sub_cat1', 'sub_cat2']` as part of my structured variables and create a structured training and testing dataset from the custom sets created earlier.
 4. Unstructured Data: I include `['train_id', 'name', 'price', 'item_description']` as part of my unstructured variables and create a structured training and testing dataset from the custom sets created earlier.
 
-After all the processing, I had 1334332 samples of training data and 148203 samples of testing data.
+After all the processing, I had 1,334,332 samples of training data and 148,203 samples of testing data. The competition [uses](https://www.kaggle.com/c/mercari-price-suggestion-challenge#evaluation) Root Mean Squared Logarithmic Error (RMSLE) as the judging metric. 
 
 ## Conclusion
 In this post, I setup the problem I'm trying to solve, selected the dataset, and preprocessed it to get it ready for modeling. In the next post, I'll use FastAI's tabular learner to tackle the structured data and predict the product price only using that data component.
