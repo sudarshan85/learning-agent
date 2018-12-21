@@ -91,7 +91,7 @@ data_str = (TabularList.from_df(train_df, path=path, cat_names=cat_vars, cont_na
            .databunch())
 ```
 
-This creates a new databunch with that is ready for training. `get_rdm_idx` is my own function that just returns a list of random indices that can be passed to set up a validation set. In the [previous](({{< ref "/post/mercari_1.md" >}})) post, I had a 10% cut out of my training data for my test set. From the rest 90%, I setup 20% for my validation set. My network architecture (including dropout values) are the same from the lesson. I also followed the same training procedure. After training for 15 epochs, I was able to get:
+This creates a new databunch with that is ready for training. `get_rdm_idx` is my own function that just returns a list of random indices that can be passed to set up a validation set. In the [previous]({{< ref "/post/mercari_1.md" >}}) post, I had a 10% cut out of my training data for my test set. From the rest 90%, I setup 20% for my validation set. My network architecture (including dropout values) are the same from the lesson. I also followed the same training procedure. After training for 15 epochs, I was able to get:
 
 |      Metric     |   Value  |
 |:---------------:|:--------:|
