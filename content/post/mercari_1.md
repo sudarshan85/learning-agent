@@ -4,6 +4,8 @@ date: 2018-12-18T15:14:19-05:00
 draft: false
 tags: [machine learning, mercari]
 ---
+# Deep Learning with Structured and Unstructured Data with FastAI - Part 1: Environment Setup and Data Preparation
+
 ## Introduction
 Data comes in various forms such as images, text, and tabular form. Deep learning can be applied to each of these areas and has excelled by giving state-of-art results. In this blog post series, I'm going to explore how to apply Deep Learning to a mixture of data components, specifically, text data and tabular data. This is part of a bigger research project that I'm working on, which uses medical data (excluding images) which often consists of different types of data. 
 
@@ -76,7 +78,7 @@ Below are the details of the extracted categorical variables:
 | `sub_cat1` |     113     |
 | `sub_cat2` |     870     |
 
-These have same number of missing values as `category_name`.
+These have same number of missing values as `category_name`. If we look at the information in the `category_name` column, we can see that almost all the information from that column is captured in the 3 new columns `['main_cat', 'sub_cat1', 'sub_cat2]`. So there is really no need to keep `category_name` column (in fact this what I originally did). However, after thinking about and following Jeremy Howard's [suggestion](https://v637g.app.goo.gl/4e2GBBkUJhWtL2Qr8) of having more columns, I decided to leave it in there. If we think about it, it makes sense to have it in there because it provides information like how certain categories occur together which might be helpful for our algorithm.
 
 
 ### Dataset Creation
