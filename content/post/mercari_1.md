@@ -4,8 +4,6 @@ date: 2018-12-18T15:14:19-05:00
 draft: false
 tags: [machine learning, mercari]
 ---
-# Deep Learning with Structured and Unstructured Data with FastAI - Part 1: Environment Setup and Data Preparation
-
 ## Introduction
 Data comes in various forms such as images, text, and tabular form. Deep learning can be applied to each of these areas and has excelled by giving state-of-art results. In this blog post series, I'm going to explore how to apply Deep Learning to a mixture of data components, specifically, text data and tabular data. This is part of a bigger research project that I'm working on, which uses medical data (excluding images) which often consists of different types of data. 
 
