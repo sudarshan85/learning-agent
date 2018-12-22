@@ -5,15 +5,15 @@ draft: False
 tags: [machine learning, mercari, structured]
 ---
 ## Introduction
-This is my second post in a series of six exploring deep learning with structured and unstructured data with the [FastAI](docs.fast.ai) library. Be sure to check out my post on [data preparation]({{< ref "/post/mercari_1.md" >}}). In this post, I'm going to describe my efforts in building a deep learning model that only uses structured data. My notebook for building this model can be found [here](http://nbviewer.jupyter.org/github/sudarshan85/kaggle-mercari/blob/master/Structured-Pred.ipynb). Much of the material here, including code and ideas, are taken on FastAI's [notebook](http://nbviewer.jupyter.org/github/fastai/course-v3/blob/master/nbs/dl1/lesson6-rossmann.ipynb) on tabular data with the [Rossmann Store Sales](https://www.kaggle.com/c/rossmann-store-sales) Kaggle dataset and the paper titled [Entity Embeddings of Categorical Variables
-](http://nbviewer.jupyter.org/github/fastai/course-v3/blob/master/nbs/dl1/lesson6-rossmann.ipynb) by Cheng Guo and Felix Berkhahn.
+This is my second post in a series of six exploring deep learning with structured and unstructured data with the [FastAI](https://docs.fast.ai/) library. Be sure to check out my post on [data preparation]({{< ref "/post/mercari_1.md" >}}). In this post, I'm going to describe my efforts in building a deep learning model that only uses structured data. Much of the material here, including code and ideas, are taken on FastAI's [notebook](http://nbviewer.jupyter.org/github/fastai/course-v3/blob/master/nbs/dl1/lesson6-rossmann.ipynb) on tabular data with the [Rossmann Store Sales](https://www.kaggle.com/c/rossmann-store-sales) Kaggle dataset and the paper titled [Entity Embeddings of Categorical Variables
+](https://arxiv.org/abs/1604.06737) by Cheng Guo and Felix Berkhahn.
 
 Structured data contain variables that can be represented in a tabular form. These include categorical variables which has a limited number of unique values (aka cardinality) or continuous variables which are just real numbers. While continuous variables can be fed directly into the input layer of a neural network (i.e., their values), categorical variables requires some special processing.
 
 ## Embeddings
 The magic sauce of representing categorical variables into a manner suitable for a deep learning model is the concept of *embeddings*. Let's look at an example of a categorical variable from the dataset to understand exactly what embeddings are and how they are helpful. One of the categorical variables that was extracted during preprocessing is called `main_cat` which represents the main category that the item belongs too and has a cardinality of 11 (including `na`) i.e., there 10 unique `main_cat` categories in this variable. These are `['Men', 'Electronics', 'Women', 'Home', 'Sports & Outdoors', 'Vintage & Collectibles', 'Beauty', 'Other', 'Kids', 'Handmade', nan]`. These are given as `string` variables which can't be fed into the model directly. They have to be converted into numbers. 
 
-One of the most common way of representing categorical variables is by using [*one-hot*](https://en.wikipedia.org/wiki/One-hot) encoding. In one-hot encoding, each category are given a unique index. Following this, each category is represented by a binary vector which has a single `1` value at the index corresponding to the index of the category. Thus, the size of the vector representing the category will be equal to the cardinality of the categorical variable. For example, the one-hot representation of the `main_cat` variable would be:
+One of the most common way of representing categorical variables is by using [one-hot](https://en.wikipedia.org/wiki/One-hot) encoding. In one-hot encoding, each category are given a unique index. Following this, each category is represented by a binary vector which has a single `1` value at the index corresponding to the index of the category. Thus, the size of the vector representing the category will be equal to the cardinality of the categorical variable. For example, the one-hot representation of the `main_cat` variable would be:
 
 |        Category        | Index |           Vector          |
 |:----------------------:|:-----:|:-------------------------:|
@@ -53,7 +53,7 @@ As an example, the following table shows how the categories (only showing a coup
 
 Please note that what I show here is just an example. These values are random values and could maybe used for initializing the embedding vectors. These vectors (more specifically the embedding matrix) would be updated as part of training with gradient descent. Each coordinate of these vectors could represent a feature and the entire vector would be called the *feature vector*. This sort of representation of the data is also know as [distributed representation](https://www.districtdatalabs.com/nlp-research-lab-part-1-distributed-representations/).
 
-How do we choose the dimension of the embedding vector? There is really no hard and fast rule this choice. Digging into the FastAI source code, I was able to find the [function](https://github.com/fastai/fastai/blob/master/fastai/tabular/data.py#L15) that calculates this for us:
+How do we choose the dimension of the embedding vector. There is really no hard and fast rule this choice. Digging into the FastAI source code, I was able to find the [function](https://github.com/fastai/fastai/blob/master/fastai/tabular/data.py#L15) that calculates this for us:
 
 ```
 def emb_sz_rule(n_cat:int)->int: return min(600, round(1.6 * n_cat**0.56))
@@ -81,7 +81,7 @@ After entity embeddings are used to represent all categorical variables, these a
 Other interesting aspects of their paper is that, they learned the embeddings of the categorical variables and used these embeddings as input to traditional machine learning models (random forest, xgboost, KNN) and got better performance than other forms of input. This indicates representing categorical data with embeddings learns and uses the intrinsic properties and relationships between the categories.
 
 ## Implementation
-You can find my notebook [here](http://nbviewer.jupyter.org/github/sudarshan85/kaggle-mercari/blob/master/Structured-Pred.ipynb). Recall that objective here is given only the categorical variables in the data, we want to predict the price of a product. I pretty much followed the same steps that was done in the [Rossman notebook](http://nbviewer.jupyter.org/github/fastai/course-v3/blob/master/nbs/dl1/lesson6-rossmann.ipynb). Unlike Rossmann, my data does not have any continuous variables so, I just passed an empty list for creating my databunch. Most of the action happens here:
+You can find my notebook [here](http://nbviewer.jupyter.org/github/sudarshan85/kaggle-mercari/blob/master/Structured-Pred.ipynb). Recall that objective here is given only the categorical variables in the data, we want to predict the price of a product. I pretty much followed the same steps that was done in the [Rossman notebook](http://nbviewer.jupyter.org/github/fastai/course-v3/blob/master/nbs/dl1/lesson6-rossmann.ipynb). Unlike the Rossmann data, this data does not have any continuous variables so, I just passed an empty list for creating my databunch. Most of the action happens here:
 
 ```
 data_str = (TabularList.from_df(train_df, path=path, cat_names=cat_vars, cont_names=[], procs=[Categorify])
@@ -91,7 +91,7 @@ data_str = (TabularList.from_df(train_df, path=path, cat_names=cat_vars, cont_na
            .databunch())
 ```
 
-This creates a new databunch with that is ready for training. `get_rdm_idx` is my own function that just returns a list of random indices that can be passed to set up a validation set. In the [previous]({{< ref "/post/mercari_1.md" >}}) post, I had a 10% cut out of my training data for my test set. From the rest 90%, I setup 20% for my validation set. My network architecture (including dropout values) are the same from the lesson. I also followed the same training procedure. After training for 15 epochs, I was able to get:
+This creates a new databunch with that is ready for training. `get_rdm_idx` is my own function that just returns a list of random indices that can be passed to set up a validation set. In the [previous](({{< ref "/post/mercari_1.md" >}})) post, I had a 10% cut out of my training data for my test set. From the rest 90%, I setup 20% for my validation set. My network architecture (including dropout values) are the same from the lesson. I also followed the same training procedure. After training for 15 epochs, I was able to get:
 
 |      Metric     |   Value  |
 |:---------------:|:--------:|
@@ -103,5 +103,3 @@ I also did inference on my test set and compared it against the actual values I 
 
 ## Conclusion
 In this post, I covered details about embeddings and how they help us get better performance in neural networks. I also went over details about the "Entity Embeddings of Categorical Variables" paper and my implementation of a deep learning model with FastAI with only structured data from the Mercari dataset. My next post would tackle the use of the unstructured data, specifically, the data `name` and `item_description` columns. In particular, next post will talk about fine-tuning a language model with this data using a pre-trained language model, which can then be used for the price prediction task.
-
-
