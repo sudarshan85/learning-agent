@@ -32,6 +32,7 @@ One of the most common way of representing categorical variables is by using [on
 During implementation the binary vector representing a single category would become a binary matrix of input values for the machine learning algorithm (think mini-batch of inputs).
 
 While simple to implement, one-hot encoding has two major disadvantages:
+
 1. By representing categories by binary vectors, the relationship between these categories is essentially lost. One-hot encoding a category only tells us whether it is present or not and nothing else. Why is that relevant? Because, these relationships are important for our algorithm to learn and one-hot encoding does not allow that learning. Think about the following examples:
     - `Men`, `Women`, and `Kids`. These categories are associated with people. 
     - `Beauty` and `Women`. Women, in general, tend to buy beauty items.
