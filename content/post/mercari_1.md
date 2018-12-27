@@ -70,6 +70,7 @@ I do a couple of preprocessing steps to the entire dataset. These steps are avai
 * Replace `na`'s in the `item_description` with the word "missing", as FastAI library doesn't like `nan`'s for text during langauge modelling.
 
 Below are the details of the extracted categorical variables:
+
 |    Name    | Cardinality |
 |:----------:|:-----------:|
 | `main_cat` |      10     |
@@ -78,6 +79,46 @@ Below are the details of the extracted categorical variables:
 
 These have same number of missing values as `category_name`. If we look at the information in the `category_name` column, we can see that almost all the information from that column is captured in the 3 new columns `['main_cat', 'sub_cat1', 'sub_cat2]`. So there is really no need to keep `category_name` column (in fact this what I originally did). However, after thinking about and following Jeremy Howard's [suggestion](https://v637g.app.goo.gl/4e2GBBkUJhWtL2Qr8) of having more columns, I decided to leave it in there. If we think about it, it makes sense to have it in there because it provides information like how certain categories occur together which might be helpful for our algorithm.
 
+#### Regression as Classification
+As of this writing, the FastAI library does not support a regression type problem with a language model out of the box. While, I could try to write a custom module which did that, I have decided to take an easier approach to utilize the already present API for classification. I decided to convert the regression problem of predicting the price of a product, into a classification problem of predicting a range of values (category) within which a product's price might belong. Now, if I model this as a classification problem for use with unstructured data, then that has to be done with structured data as well, as one of the primary goals of this blog post series is to compare and contrast performance differences between using various components of the data.
+
+For converting this into a classification problem, I followed similar steps given [here](http://fastml.com/regression-as-classification/). I used to create labels (or categories) in the `log1p` scale of the price, since that allowed more granularity. My objective here is to get a bunch labels which can be assigned to each record in the data, based on where the `log1p` of the price falls into. For this, I needed to determine my labels first. These are the steps I followed (keep in mind that `price` values here are in the `log1p` scale) :
+
+1. Create an array of range of values that went from the `price.min()` to `price.max()` with an interval of 0.2. This gave me 33 values.
+2. Create a dictionary which mapped the label names to the number of records with that label. Label names are strings which correspond to the value (rounded to 1 decimal place) of the value in the array. For the first and last values I simply had a string that said '<= value' and '> value'. This gave me 32 labels.
+3. Look at the number of records and make appropriate judgment calls to merge certain labels depending on how many records belong that label.
+4. Merge labels according to rule establish in the previous step. After this I was left with 21 labels with value of price ranging from less than 1.6 to greater than 5.6.
+5. Write a function that takes in a price value determines and returns the appropriate label.
+6. Create a new column `labels` in the training dataset by applying the function created in the previous step to the `log1p(price)` column.
+7. Run sanity checks to figure out that all rows had labels and the number of records with labels added up to the length of the training dataframe.
+
+The table below shows the labels and the number of records belong to each label:
+
+| Label `log1p(price)` | # Records |
+|:--------------------:|:---------:|
+|        <= 1.6        |   18,703  |
+|        1.6-1.8       |   47,641  |
+|        1.8-2.0       |   32,293  |
+|        2.0-2.2       |  113,882  |
+|        2.2-2.4       |  163,096  |
+|        2.4-2.6       |  118,823  |
+|        2.6-2.8       |  171,588  |
+|        2.8-3.0       |  166,750  |
+|        3.0-3.2       |  127,084  |
+|        3.2-3.4       |  131,882  |
+|        3.4-2.6       |  114,872  |
+|        3.6-3.8       |   73,038  |
+|        3.8-4.0       |   61,827  |
+|        4.0-4.2       |   45,638  |
+|        4.2-4.4       |   30,331  |
+|        4.4-4.6       |   19,044  |
+|        4.6-4.8       |   14,855  |
+|        4.8-5.0       |   9,626   |
+|        5.0-5.2       |   7,628   |
+|        5.2-5.6       |   7,881   |
+|         > 5.6        |   5,179   |
+
+Once I had the `labels` column, the data was prepared for classification with 21 classes.
 
 ### Dataset Creation
 I created 4 datasets from my data for each of the various types of modeling.
