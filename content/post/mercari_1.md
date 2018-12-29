@@ -5,9 +5,9 @@ draft: false
 tags: [machine learning, mercari]
 ---
 ## Introduction
-Data comes in various forms such as images, text, and tabular form. Deep learning can be applied to each of these areas and has excelled by giving state-of-art results. In this blog post series, I'm going to explore how to apply Deep Learning to a mixture of data components, specifically, text data and tabular data. This is part of a bigger research project that I'm working on, which uses medical data (excluding images) which often consists of different types of data. 
+Data comes in various forms such as images, text, and tabular form. Deep learning can be applied to each of these areas and has excelled by giving state-of-art results. In this blog post series, I'm going to explore how to apply Deep Learning to a mixture of data groups, specifically, text data and tabular data. This is part of a bigger research project that I'm working on, which uses medical data (excluding images) which often consists of different types of data. 
 
-I want to see how each data component contributes to the performance of the end model. To do this, I am going to build models that only utilize structured, unstructured, and a combination of the both the data and compare their performance.
+I want to see how each data group contributes to the performance of the end model. To do this, I am going to build models that only utilize structured, unstructured, and a combination of the both the data and compare their performance.
 
 Structured data are presented in tabular form, examples of which include a product category or a diagnosis code for a suspected medical condition. Unstructured data include free-text such description of a product or a clinical note written by a doctor. Note that I'm excluding images as part of this projects though they come under unstructured data.
 
@@ -27,7 +27,7 @@ As I mentioned earlier, medical data often include structured and unstructured i
 
 Surprisingly, I couldn't find many datasets that actually included both structured and unstructured information together. There were plenty of image datasets, NLP datasets that contained only text, and tabular datasets. After a bit of searching, I found a dataset that fit my needs: [Mercari Price Suggestion Challenge](https://www.kaggle.com/c/mercari-price-suggestion-challenge). This competition concluded 10 months ago.
 
-[Mercari](https://www.mercari.com/) is Japan&#146;s biggest community-powered shopping app. Sellers post items that they want to sell along with an asking price. Mercari offers pricing suggestions to them. The objective of this competition is to build an algorithm that automatically suggests the right product prices. The data provided including user-inputted text descriptions of their products (unstructured data component), including details like product category name, brand name, and item condition (structured data component). The data can be downloaded using the [Kaggle API](https://github.com/Kaggle/kaggle-api) software using the command `Kaggle competitions download -c Mercari-price-suggestion-challenge`.
+[Mercari](https://www.mercari.com/) is Japan&#146;s biggest community-powered shopping app. Sellers post items that they want to sell along with an asking price. Mercari offers pricing suggestions to them. The objective of this competition is to build an algorithm that automatically suggests the right product prices. The data provided including user-inputted text descriptions of their products (unstructured data group), including details like product category name, brand name, and item condition (structured data group). The data can be downloaded using the [Kaggle API](https://github.com/Kaggle/kaggle-api) software using the command `Kaggle competitions download -c Mercari-price-suggestion-challenge`.
 
 This is a *Kernels only* competition, wherein you only provide a kernel (aka a script/code) which is then run on Kaggle servers to produce output and compare results. My objective for working with this dataset is not necessarily to get a good score. It's more so to learn how to build an end-to-end architecture with the FastAI library.
 
@@ -80,7 +80,7 @@ Below are the details of the extracted categorical variables:
 These have same number of missing values as `category_name`. If we look at the information in the `category_name` column, we can see that almost all the information from that column is captured in the 3 new columns `['main_cat', 'sub_cat1', 'sub_cat2]`. So there is really no need to keep `category_name` column (in fact this what I originally did). However, after thinking about and following Jeremy Howard's [suggestion](https://v637g.app.goo.gl/4e2GBBkUJhWtL2Qr8) of having more columns, I decided to leave it in there. If we think about it, it makes sense to have it in there because it provides information like how certain categories occur together which might be helpful for our algorithm.
 
 #### Regression as Classification
-As of this writing, the FastAI library does not support a regression type problem with a language model out of the box. While, I could try to write a custom module which did that, I have decided to take an easier approach to utilize the already present API for classification. I decided to convert the regression problem of predicting the price of a product, into a classification problem of predicting a range of values (category) within which a product's price might belong. Now, if I model this as a classification problem for use with unstructured data, then that has to be done with structured data as well, as one of the primary goals of this blog post series is to compare and contrast performance differences between using various components of the data.
+As of this writing, the FastAI library does not support a regression type problem with a language model out of the box. While, I could try to write a custom module which did that, I have decided to take an easier approach to utilize the already present API for classification. I decided to convert the regression problem of predicting the price of a product, into a classification problem of predicting a range of values (category) within which a product's price might belong. Now, if I model this as a classification problem for use with unstructured data, then that has to be done with structured data as well, as one of the primary goals of this blog post series is to compare and contrast performance differences between using various groups of the data.
 
 For converting this into a classification problem, I followed similar steps given [here](http://fastml.com/regression-as-classification/). I used to create labels (or categories) in the `log1p` scale of the price, since that allowed more granularity. My objective here is to get a bunch labels which can be assigned to each record in the data, based on where the `log1p` of the price falls into. For this, I needed to determine my labels first. These are the steps I followed (keep in mind that `price` values here are in the `log1p` scale) :
 
@@ -136,6 +136,7 @@ The competition [uses](https://www.kaggle.com/c/mercari-price-suggestion-challen
 $\epsilon$ = $\sqrt{\frac{1}{n}\sum(log(p_i+1)-log(a_i+1))^2}$
 
 where,
+
 * $\epsilon$ is the RMSLE value (score)
 * *n* is the total number of observations in the dataset
 * $p_i$ is the predicted price for product *i*
@@ -143,4 +144,4 @@ where,
 * $log(x)$ is the natural logrithm of *x*
 
 ## Conclusion
-In this post, I setup the problem I'm trying to solve, selected the dataset, and preprocessed it to get it ready for modeling. In the next post, I'll use FastAI's tabular learner to tackle the structured data and predict the product price only using that data component.
+In this post, I setup the problem I'm trying to solve, selected the dataset, and preprocessed it to get it ready for modeling. In the next post, I'll use FastAI's tabular learner to tackle the structured data and predict the product price and product price category only using that.
